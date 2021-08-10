@@ -1,1 +1,179 @@
-!function(e){var t={};function r(o){if(t[o])return t[o].exports;var n=t[o]={i:o,l:!1,exports:{}};return e[o].call(n.exports,n,n.exports,r),n.l=!0,n.exports}r.m=e,r.c=t,r.d=function(e,t,o){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:o})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(r.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)r.d(o,n,function(t){return e[t]}.bind(null,n));return o},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="/",r(r.s=140)}({140:function(e,t,r){e.exports=r(141)},141:function(e,t,r){r(61),r(142)},142:function(e,t){$(document).ready((function(){var e=$(location).attr("hash");if(e.startsWith("#project")){e=e.substr(8);var t=$(".js-card-"+e);if(t.length<1)return;var r=t.parent().find(".js-offer-container");r.length>0&&r.show(),$(window).scrollTop(t.offset().top-$("body .header").height())}}))},61:function(e,t){$(window).load((function(){$(document).on("click",".js-link-description-order",(function(){var e=$(this),t=e.closest(".order-info"),r=t.find(".js-link-description-order img"),o=e.find("img");if(t.toggleClass("order-info--hide"),o.toggleClass("rotate180"),"hide"===e.data("type")){t.addClass("order-info--hide"),r.removeClass("rotate180"),o.addClass("rotate180");var n=e.closest(".track-head");n.length&&$("html, body").animate({scrollTop:n.offset().top},1)}}))}))}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./public_html/js/app/order-info.js":
+/*!******************************************!*\
+  !*** ./public_html/js/app/order-info.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(window).load(function () {
+  $(document).on('click', '.js-link-description-order', function () {
+    var $this = $(this);
+    var $table = $this.closest('.order-info');
+    var $arrows = $table.find('.js-link-description-order img');
+    var $arrow = $this.find('img');
+    $table.toggleClass('order-info--hide');
+    $arrow.toggleClass('rotate180');
+
+    if ($this.data('type') === 'hide') {
+      $table.addClass('order-info--hide');
+      $arrows.removeClass('rotate180');
+      $arrow.addClass('rotate180');
+      var trackHead = $this.closest('.track-head');
+
+      if (trackHead.length) {
+        $('html, body').animate({
+          scrollTop: trackHead.offset().top
+        }, 1);
+      }
+    }
+  });
+});
+
+/***/ }),
+
+/***/ "./public_html/js/pages/offers/bootstrap.js":
+/*!**************************************************!*\
+  !*** ./public_html/js/pages/offers/bootstrap.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! appJs/order-info.js */ "./public_html/js/app/order-info.js"); // Различные скрипты страницы
+
+
+__webpack_require__(/*! ./offers.js */ "./public_html/js/pages/offers/offers.js");
+
+/***/ }),
+
+/***/ "./public_html/js/pages/offers/offers.js":
+/*!***********************************************!*\
+  !*** ./public_html/js/pages/offers/offers.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  // Переход к нужной карточке и разворачивание её
+  var hash = $(location).attr('hash');
+
+  if (hash.startsWith('#project')) {
+    hash = hash.substr(8);
+    var card = $('.js-card-' + hash);
+
+    if (card.length < 1) {
+      return;
+    }
+
+    var parent = card.parent().find('.js-offer-container');
+
+    if (parent.length > 0) {
+      parent.show();
+    }
+
+    $(window).scrollTop(card.offset().top - $('body .header').height());
+  }
+});
+
+/***/ }),
+
+/***/ 15:
+/*!********************************************************!*\
+  !*** multi ./public_html/js/pages/offers/bootstrap.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /Users/sc/Documents/GitHub/kwork.ru/public_html/js/pages/offers/bootstrap.js */"./public_html/js/pages/offers/bootstrap.js");
+
+
+/***/ })
+
+/******/ });

@@ -1,1 +1,210 @@
-!function(n){var o={};function t(e){if(o[e])return o[e].exports;var r=o[e]={i:e,l:!1,exports:{}};return n[e].call(r.exports,r,r.exports,t),r.l=!0,r.exports}t.m=n,t.c=o,t.d=function(n,o,e){t.o(n,o)||Object.defineProperty(n,o,{enumerable:!0,get:e})},t.r=function(n){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(n,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(n,"__esModule",{value:!0})},t.t=function(n,o){if(1&o&&(n=t(n)),8&o)return n;if(4&o&&"object"==typeof n&&n&&n.__esModule)return n;var e=Object.create(null);if(t.r(e),Object.defineProperty(e,"default",{enumerable:!0,value:n}),2&o&&"string"!=typeof n)for(var r in n)t.d(e,r,function(o){return n[o]}.bind(null,r));return e},t.n=function(n){var o=n&&n.__esModule?function(){return n.default}:function(){return n};return t.d(o,"a",o),o},t.o=function(n,o){return Object.prototype.hasOwnProperty.call(n,o)},t.p="/",t(t.s=157)}({157:function(n,o,t){n.exports=t(158)},158:function(n,o,t){t(159)},159:function(n,o){var t,e,r,i,a,l,s,u,c,d;(t=jQuery,e=".js-bookmarks-category",r=".js-link-load-kworks",i=".js-bookmark-kworks",a=".js-bookmarks-category-link",l=function(){if(!window.matchMedia("(max-width:767px)").matches&&!isMobile()||t(r).hasClass("hidden")||t(r).hasClass("onload"))return!1;t(window).scrollTop()+t(window).height()+250>=t(document).height()&&loadKworks()},s=function(){window.onpopstate=function(n){console.log(n),n.state&&(c(n.state.response),d(n.state.url))}},u=function(n){t(i).html(""),t(i).preloader("show"),t(r).addClass("hidden"),d(n),t.ajax({url:n,type:"post",data:{},dataType:"json",success:function(o){!function(n,o){window.history.pushState({url:n,response:o},"",t(e).val())}(n,o),c(o)}})},c=function(n){void 0!==n?(n.paging.page*n.paging.items_per_page<n.paging.total&&t(r).removeClass("hidden"),t(i).html(n.html)):location.reload()},d=function(n){t(a).removeClass("link-color"),t(a).filter("[data-href='"+n+"']").addClass("link-color"),t(e).val(n)},{init:function(){s(),t(document).on("change",e,(function(){u(t(this).val())})).on("click",r,(function(){loadKworks()})).on("click",a,(function(){u(t(this).data("href"))})),t(window).scroll(l)}}).init()}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./public_html/js/pages/bookmarks/bookmarks.js":
+/*!*****************************************************!*\
+  !*** ./public_html/js/pages/bookmarks/bookmarks.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var Bookmarks = function ($) {
+  var _selectors = {
+    filterSelect: '.js-bookmarks-category',
+    linkLoadKworks: '.js-link-load-kworks',
+    containerKworks: '.js-bookmark-kworks',
+    filterCategoryLink: '.js-bookmarks-category-link'
+  },
+      _init = function _init() {
+    _loadHistory();
+
+    $(document).on('change', _selectors.filterSelect, function () {
+      _loadKworks($(this).val());
+    }).on('click', _selectors.linkLoadKworks, function () {
+      loadKworks();
+    }).on('click', _selectors.filterCategoryLink, function () {
+      _loadKworks($(this).data('href'));
+    });
+    $(window).scroll(_scrollWindow);
+  },
+      _scrollWindow = function _scrollWindow() {
+    if (!window.matchMedia("(max-width:767px)").matches && !isMobile() || $(_selectors.linkLoadKworks).hasClass('hidden') || $(_selectors.linkLoadKworks).hasClass('onload')) {
+      return false;
+    }
+
+    if ($(window).scrollTop() + $(window).height() + 250 >= $(document).height()) {
+      loadKworks();
+    }
+  },
+      _setHistory = function _setHistory(url, response) {
+    window.history.pushState({
+      url: url,
+      response: response
+    }, "", $(_selectors.filterSelect).val());
+  },
+      _loadHistory = function _loadHistory() {
+    window.onpopstate = function (event) {
+      console.log(event);
+
+      if (event.state) {
+        _showKworks(event.state.response);
+
+        _updateFilter(event.state.url);
+      }
+    };
+  },
+      _loadKworks = function _loadKworks(url) {
+    $(_selectors.containerKworks).html('');
+    $(_selectors.containerKworks).preloader("show");
+    $(_selectors.linkLoadKworks).addClass('hidden');
+
+    _updateFilter(url);
+
+    $.ajax({
+      url: url,
+      type: 'post',
+      data: {},
+      dataType: 'json',
+      success: function success(response) {
+        _setHistory(url, response);
+
+        _showKworks(response);
+      }
+    });
+  },
+      _showKworks = function _showKworks(response) {
+    if (typeof response === "undefined") {
+      location.reload();
+      return;
+    }
+
+    if (response.paging.page * response.paging.items_per_page < response.paging.total) {
+      $(_selectors.linkLoadKworks).removeClass('hidden');
+    }
+
+    $(_selectors.containerKworks).html(response.html);
+  },
+      _updateFilter = function _updateFilter(dataHref) {
+    $(_selectors.filterCategoryLink).removeClass('link-color');
+    $(_selectors.filterCategoryLink).filter("[data-href='" + dataHref + "']").addClass('link-color');
+    $(_selectors.filterSelect).val(dataHref);
+  };
+
+  return {
+    init: _init
+  };
+}(jQuery);
+
+Bookmarks.init();
+
+/***/ }),
+
+/***/ "./public_html/js/pages/bookmarks/bootstrap.js":
+/*!*****************************************************!*\
+  !*** ./public_html/js/pages/bookmarks/bootstrap.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ./bookmarks.js */ "./public_html/js/pages/bookmarks/bookmarks.js");
+
+/***/ }),
+
+/***/ 21:
+/*!***********************************************************!*\
+  !*** multi ./public_html/js/pages/bookmarks/bootstrap.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /Users/sc/Documents/GitHub/kwork.ru/public_html/js/pages/bookmarks/bootstrap.js */"./public_html/js/pages/bookmarks/bootstrap.js");
+
+
+/***/ })
+
+/******/ });

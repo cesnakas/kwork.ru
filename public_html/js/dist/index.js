@@ -1,1 +1,1348 @@
-!function(e){var t={};function s(n){if(t[n])return t[n].exports;var i=t[n]={i:n,l:!1,exports:{}};return e[n].call(i.exports,i,i.exports,s),i.l=!0,i.exports}s.m=e,s.c=t,s.d=function(e,t,n){s.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},s.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},s.t=function(e,t){if(1&t&&(e=s(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(s.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var i in e)s.d(n,i,function(t){return e[t]}.bind(null,i));return n},s.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return s.d(t,"a",t),t},s.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},s.p="/",s(s.s=102)}({102:function(e,t,s){e.exports=s(103)},103:function(e,t,s){Vue.component("general-search-index",s(183).default);new Vue({el:"#app"})},183:function(e,t,s){"use strict";s.r(t);var n=s(8);Vue.component("search",s(87).default);var i={mixins:[n.a],data:function(){return{i18n:{en:{"Найти услуги":"Search","Какая услуга вас интересует?":"What service are you looking for?","Поиск услуг":"Services"}}}},created:function(){this.i18nInit()},methods:{onSearchExecuted:function(e){var t=USER_ID||0;(t=parseInt(t))<1&&Cookies.set("registerPopupForce","1",{expires:2,path:"/",SameSite:"Lax"});var s=$.param({query:e}),n=window.location.origin+"/search?"+s+"&c=0";window.location.href=n}}},o=s(3),r=Object(o.a)(i,(function(){var e=this.$createElement,t=this._self._c||e;return t("search",{staticClass:"general-search-index d-none d-md-block",attrs:{"suggestions-endpoint":"/general-search/suggest","clear-history-endpoint":"/general-search/clear-history",placeholder:this.t("Какая услуга вас интересует?"),"suggestions-header":this.t("Поиск услуг")},on:{"search-executed":this.onSearchExecuted}},[t("template",{slot:"clear-button"}),this._v(" "),t("template",{slot:"search-button"},[t("button",{staticClass:"button button-success"},[this._v(this._s(this.t("Найти услуги")))])])],2)}),[],!1,null,null,null);t.default=r.exports},3:function(e,t,s){"use strict";function n(e,t,s,n,i,o,r,a){var u,c="function"==typeof e?e.options:e;if(t&&(c.render=t,c.staticRenderFns=s,c._compiled=!0),n&&(c.functional=!0),o&&(c._scopeId="data-v-"+o),r?(u=function(e){(e=e||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(e=__VUE_SSR_CONTEXT__),i&&i.call(this,e),e&&e._registeredComponents&&e._registeredComponents.add(r)},c._ssrRegister=u):i&&(u=a?function(){i.call(this,this.$root.$options.shadowRoot)}:i),u)if(c.functional){c._injectStyles=u;var l=c.render;c.render=function(e,t){return u.call(t),l(e,t)}}else{var h=c.beforeCreate;c.beforeCreate=h?[].concat(h,u):[u]}return{exports:e,options:c}}s.d(t,"a",(function(){return n}))},8:function(e,t,s){"use strict";t.a={data:function(){return{i18n:null,locale:"ru",defaultLocale:"ru"}},methods:{i18nInit:function(){this.locale=document.documentElement.lang},i18nForceLocale:function(e){this.locale=e},t:function(e,t){if(this.locale==this.defaultLocale)return this.replacePlaceholders(e,t);if(this.i18n&&this.i18n.hasOwnProperty(this.locale)&&this.i18n[this.locale].hasOwnProperty(e)){var s=this.i18n[this.locale][e];return this.replacePlaceholders(s,t)}return e},tn:function(e,t,s){if(this.i18n&&this.i18n.hasOwnProperty(this.locale)&&this.i18n[this.locale].hasOwnProperty(e)){var n=this.i18n[this.locale][e];if(Array.isArray(n)&&n.length==this.getPluralFormsCount()){var i=this.getPluralForm(t),o=this.i18n[this.locale][e][i];return this.replacePlaceholders(o,s)}}return e},getPluralForm:function(e){return"ru"==this.locale?e%10==1&&e%100!=11?0:e%10>=2&&e%10<=4&&(e%100<10||e%100>=20)?1:2:e>1?1:0},getPluralFormsCount:function(){return"ru"==this.locale?3:2},replacePlaceholders:function(e,t){if(!t)return e;for(var s=0;s<t.length;s++)e=e.replace("{{"+s+"}}",t[s]);return e}}}},87:function(e,t,s){"use strict";s.r(t);var n={mixins:[s(8).a],data:function(){return{search:"",suggestions:[],selectedSuggestion:"",axiosRequest:null,requestsExecuting:!1,suggestWhenSearchChanged:!0,clearSuggestionsOnBlur:!0,historySuggested:!0,i18n:{en:{"Недавний поиск":"Recent search","Очистить":"Delete"}}}},props:["suggestionsEndpoint","suggestionsData","clearHistoryEndpoint","placeholder","defaultSearch","suggestionsHeader","searchName"],computed:{showClearButton:function(){return""!=this.search},hasSuggestions:function(){return this.suggestions.length>0},suggestionSelected:function(){return""!=this.selectedSuggestion},inputClass:function(){return{"has-suggestions":this.hasSuggestions,"suggestion-selected":this.suggestionSelected,"has-text":""!=this.search}}},watch:{search:function(e){window.bus.$emit("search-"+this.searchName+"-change",this.search),this.suggestWhenSearchChanged?this.onInput():this.suggestWhenSearchChanged=!0}},created:function(){var e=this;this.i18nInit();var t=this.defaultSearch?this.defaultSearch:"";this.changeSearchWithoutSuggesting(t),window.bus.$on("search-"+this.searchName+"-change",(function(t){e.search=t}))},methods:{onInput:function(){var e=this;if(!this.requestsExecuting){this.requestsExecuting=!0;var t=this.search;if(this.search.length<3&&this.search.length>0)return this.historySuggested=!1,this.suggestions=[],this.selectedSuggestion="",void(this.requestsExecuting=!1);this.axiosRequest=axios.CancelToken.source();var s=this.suggestionsData?this.suggestionsData:{};s.query=this.search,axios.post(this.suggestionsEndpoint,s,{cancelToken:this.axiosRequest.token}).then((function(s){e.historySuggested=""==e.search,e.suggestions=s.data.data.suggestions,e.selectedSuggestion="",e.requestsExecuting=!1,t!=e.search&&e.onInput()})).catch((function(e){}))}},onArrowDown:function(){if(0!=this.suggestions.length){var e=_.findIndex(this.suggestions,["suggestion",this.selectedSuggestion]);-1==e?e=0:e>=this.suggestions.length-1?e=this.suggestions.length-1:e++,this.selectedSuggestion=this.suggestions[e].suggestion}},onArrowUp:function(){if(0!=this.suggestions.length){var e=_.findIndex(this.suggestions,["suggestion",this.selectedSuggestion]);-1!=e&&(e>0?(e--,this.selectedSuggestion=this.suggestions[e].suggestion):this.selectedSuggestion="")}},onEnter:function(){this.stopSuggestingProcess();var e=""!=this.selectedSuggestion?this.selectedSuggestion:this.search;this.changeSearchWithoutSuggesting(e),this.$emit("search-executed",e),this.clearSuggestions()},onEscape:function(){this.stopSuggestingProcess(),this.clearSuggestions()},onMouseOver:function(e){this.selectedSuggestion=e},onMouseLeave:function(){this.selectedSuggestion=""},onSuggestionClick:function(){this.onEnter()},onDropdownMouseDown:function(){this.clearSuggestionsOnBlur=!1},onClear:function(){this.changeSearchWithoutSuggesting(""),this.$emit("search-clear",""),this.clearSuggestions()},onBlur:function(){this.stopSuggestingProcess(),this.clearSuggestionsOnBlur?this.clearSuggestions():this.clearSuggestionsOnBlur=!0},onFocus:function(){this.onInput()},clearSuggestions:function(){this.suggestions=[],this.selectedSuggestion=""},changeSearchWithoutSuggesting:function(e){this.search!=e&&(this.suggestWhenSearchChanged=!1,this.search=e)},stopSuggestingProcess:function(){this.axiosRequest&&this.axiosRequest.cancel(),this.requestsExecuting=!1},clear:function(){this.onClear()},setSearch:function(e){this.changeSearchWithoutSuggesting(e)},clearHistory:function(){this.clearSuggestions(),axios.post(this.clearHistoryEndpoint).then((function(e){})).catch((function(e){}))}}},i=s(3),o=Object(i.a)(n,(function(){var e=this,t=e.$createElement,s=e._self._c||t;return s("div",{staticClass:"custom-search"},[s("input",{directives:[{name:"model",rawName:"v-model",value:e.search,expression:"search"}],staticClass:"form-control",class:e.inputClass,attrs:{type:"text",placeholder:e.placeholder},domProps:{value:e.search},on:{input:[function(t){t.target.composing||(e.search=t.target.value)},function(t){e.search=t.target.value}],keydown:[function(t){return!t.type.indexOf("key")&&e._k(t.keyCode,"up",38,t.key,["Up","ArrowUp"])?null:(t.preventDefault(),e.onArrowUp(t))},function(t){return!t.type.indexOf("key")&&e._k(t.keyCode,"down",40,t.key,["Down","ArrowDown"])?null:(t.preventDefault(),e.onArrowDown(t))},function(t){return!t.type.indexOf("key")&&e._k(t.keyCode,"enter",13,t.key,"Enter")?null:(t.preventDefault(),e.onEnter(t))}],keyup:function(t){return!t.type.indexOf("key")&&e._k(t.keyCode,"esc",27,t.key,["Esc","Escape"])?null:(t.preventDefault(),e.onEscape(t))},blur:e.onBlur,focus:e.onFocus}}),e._v(" "),e.showClearButton?s("span",{staticClass:"clear-button",on:{click:function(t){return t.preventDefault(),e.onClear(t)}}},[e._t("clear-button",[e._v("×")])],2):e._e(),e._v(" "),s("span",{staticClass:"search-button",class:[e.hasSuggestions?"has-suggestions":""],on:{click:function(t){return t.preventDefault(),e.onEnter(t)}}},[e._t("search-button",[e._m(0)])],2),e._v(" "),s("div",{directives:[{name:"show",rawName:"v-show",value:e.suggestions.length>0,expression:"suggestions.length > 0"}],staticClass:"dropdown"},[e.historySuggested?s("div",{staticClass:"history d-flex justify-content-between"},[s("div",{staticClass:"d-inline-block"},[e._v(e._s(e.t("Недавний поиск")))]),e._v(" "),s("div",{staticClass:"d-inline-block clear-history-button",on:{mousedown:e.onDropdownMouseDown,click:e.clearHistory}},[e._v("\n\t\t\t\t"+e._s(e.t("Очистить"))+"\n\t\t\t")])]):e._e(),e._v(" "),e.suggestionsHeader&&!e.historySuggested?s("div",{staticClass:"suggestions-header"},[s("div",[e._v(e._s(e.suggestionsHeader))])]):e._e(),e._v(" "),s("div",{staticClass:"suggestions"},e._l(e.suggestions,(function(t){return s("div",{staticClass:"suggestion d-flex justify-content-start",class:{selected:t.suggestion==e.selectedSuggestion},on:{mouseover:function(s){return e.onMouseOver(t.suggestion)},mouseleave:e.onMouseLeave,mousedown:e.onDropdownMouseDown,click:e.onSuggestionClick}},[s("div",{staticClass:"d-inline-block"},[s("span",{domProps:{innerHTML:e._s(t.excerpt)}})])])})),0)])])}),[function(){var e=this.$createElement,t=this._self._c||e;return t("span",{staticClass:"fa-stack text-success"},[t("i",{staticClass:"fa fa-square fa-stack-2x"}),this._v(" "),t("i",{staticClass:"fa fa-search fa-stack-1x fa-inverse"})])}],!1,null,null,null);t.default=o.exports}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./public_html/js/app/search.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./public_html/js/app/search.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var appJs_i18n_mixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! appJs/i18n-mixin */ "./public_html/js/app/i18n-mixin.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/**
+ * Поле для ввода поисковой строки с подсказками. Обязательные свойства:
+ *   suggestionsEndpoint - url для загрузки поисковых подсказок
+ *   suggestionsData - дополнительные данные для загрузки поисковых подсказок (объект),
+ *   перед передачей в url в объект будут добавлены свойства:
+ *     query - строка поиска
+ *     spellerResponse - ответ спеллеря Яндекса (результат проверки строки поиска на ошибки)
+ *   clearHistoryEndpoint - url для очистки истории запросов
+ *  Опционально можно задать:
+ *    placeholder - плейсходер для поля ввода
+ *    defaultSearch - запрос по умолчанию, который появляется в строке поиска при сбросе 
+ *      (кнопка с крестиком). Если не задано, то при сбросе строка поиска очищается
+ *    suggestionsHeader - заголовок для выпадающего списка с поисковыми подсказками
+ *  Методы:
+ *    clear - очистить строку поиска
+ *  Компонент генерирует события:
+ *    search-executed - пользователь попросил выполнить поиск по строке, в событие передается
+ *      строка поиска (набранная пользователем вручную или из поисковых подсказок)
+ */
+// Локализация
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [appJs_i18n_mixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  data: function data() {
+    return {
+      // Строка поиска
+      search: "",
+      // Поисковые подсказки
+      suggestions: [],
+      // Выбранная поисковая подсказка
+      selectedSuggestion: "",
+      // Запрос поисковых подсказок
+      // (для возможности отмены)
+      axiosRequest: null,
+      // Запросы спеллера/поисковых подсказок в данный момент выполняются
+      // (не запускать новые)
+      requestsExecuting: false,
+      // Можно ли выводить подсказки при изменении строки поиска. Нужно
+      // в следующих случаях:
+      // 1) Пользователь выбрал подсказку. В этот момент строка поиска должна
+      // измениться на выбранную подсказку, но повторно давать подсказки уже
+      // не нужно
+      // 2) Пользователь нажал на кнопку "очистить поиск". В этот момент нужно обнулить
+      // строку поиска, но при этом не выдавать историю запросов
+      suggestWhenSearchChanged: true,
+      // Можно ли очищать подсказки при потере фокуса строкой поиска. Нужно
+      // в случае, если пользователь кликнул мышкой (не выбрал стрелками на
+      // клавиатуре и нажал Enter, а именно кликнул) на подсказке. В этом случае
+      // событие blur срабатывает раньше click и очищает список подсказок (click,
+      // соответственно, не вызывается, т.к. элемента с подсказкой уже нет на
+      // странице)
+      clearSuggestionsOnBlur: true,
+      // Флаг устанавливается, если в данный момент показаны подсказки
+      // по пустому запросу (т.е. история запросов пользователя)			
+      historySuggested: true,
+      // Локализация компонента
+      i18n: {
+        en: {
+          "Недавний поиск": "Recent search",
+          "Очистить": "Delete"
+        }
+      }
+    };
+  },
+  props: [// Url для загрузки поисковых подсказок
+  "suggestionsEndpoint", // Дополнительные данные для загрузки поисковых подсказок
+  "suggestionsData", // Url для очистки истории запросов
+  "clearHistoryEndpoint", // Плейсходлер для поля ввода
+  "placeholder", // Запрос по умолчанию, который появляется в строке
+  // поиска при сбросе (кнопка с крестиком). Если не задано, 
+  // то при сбросе строка поиска очищается
+  "defaultSearch", // Заголовок для выпадающего списка с поисковыми подсказками
+  "suggestionsHeader", // Имя поиска
+  "searchName"],
+  computed: {
+    // Показать кнопку сброса поиска, если текущий запрос отличается
+    // от запроса по умолчанию (или, если не задан запрос по умолчанию,
+    // то от пустой строки)
+    showClearButton: function showClearButton() {
+      return this.search != "";
+    },
+    // Для текущей строки поиска есть хотя бы одна подсказка
+    // (развернут выпадающий список с подсказками)
+    hasSuggestions: function hasSuggestions() {
+      return this.suggestions.length > 0;
+    },
+    // В настоящий момент выбрана одна из поисковых подсказок
+    suggestionSelected: function suggestionSelected() {
+      return this.selectedSuggestion != '';
+    },
+    // Классы для поля ввода
+    inputClass: function inputClass() {
+      return {
+        "has-suggestions": this.hasSuggestions,
+        "suggestion-selected": this.suggestionSelected,
+        "has-text": this.search != ""
+      };
+    }
+  },
+  watch: {
+    // Изменилась строка поиска
+    search: function search(val) {
+      window.bus.$emit('search-' + this.searchName + '-change', this.search);
+
+      if (this.suggestWhenSearchChanged) {
+        this.onInput();
+      } else {
+        this.suggestWhenSearchChanged = true;
+      }
+    }
+  },
+
+  /**
+   * Created event
+   */
+  created: function created() {
+    var _this = this;
+
+    // Инициализировать mixin локализации
+    this.i18nInit(); // Заполнить значение строки поиска по умолчанию
+
+    var defaultSearch = this.defaultSearch ? this.defaultSearch : "";
+    this.changeSearchWithoutSuggesting(defaultSearch);
+    window.bus.$on('search-' + this.searchName + '-change', function (val) {
+      _this.search = val;
+    });
+  },
+  methods: {
+    /**
+     * Обработчик события на ввод текста в строку поиска
+     */
+    onInput: function onInput() {
+      var _this2 = this;
+
+      if (this.requestsExecuting) {
+        return;
+      }
+
+      this.requestsExecuting = true;
+      var searchBeforeRequest = this.search; // Для строки поиска в 1 и 2 символа никаких подсказок не выводим
+
+      if (this.search.length < 3 && this.search.length > 0) {
+        this.historySuggested = false;
+        this.suggestions = [];
+        this.selectedSuggestion = "";
+        this.requestsExecuting = false;
+        return;
+      }
+
+      this.axiosRequest = axios.CancelToken.source();
+      var suggestionsData = this.suggestionsData ? this.suggestionsData : {};
+      suggestionsData.query = this.search;
+      axios.post(this.suggestionsEndpoint, suggestionsData, {
+        cancelToken: this.axiosRequest.token
+      }).then(function (response) {
+        _this2.historySuggested = _this2.search == "";
+        _this2.suggestions = response.data.data.suggestions;
+        _this2.selectedSuggestion = "";
+        _this2.requestsExecuting = false; // Если за время выполнения запросов строка поиска изменилась,
+        // повтроить вызов
+
+        if (searchBeforeRequest != _this2.search) {
+          _this2.onInput();
+        }
+      })["catch"](function (thrown) {});
+    },
+
+    /**
+     * Обработчик события на нажатие кнопки вниз
+     */
+    onArrowDown: function onArrowDown() {
+      if (this.suggestions.length == 0) {
+        return;
+      }
+
+      var index = _.findIndex(this.suggestions, ["suggestion", this.selectedSuggestion]);
+
+      if (index == -1) {
+        index = 0;
+      } else if (index >= this.suggestions.length - 1) {
+        index = this.suggestions.length - 1;
+      } else {
+        index++;
+      }
+
+      this.selectedSuggestion = this.suggestions[index].suggestion;
+    },
+
+    /**
+     * Обработчик события на нажатие кнопки вверх
+     */
+    onArrowUp: function onArrowUp() {
+      if (this.suggestions.length == 0) {
+        return;
+      }
+
+      var index = _.findIndex(this.suggestions, ["suggestion", this.selectedSuggestion]);
+
+      if (index == -1) {
+        return;
+      } else if (index > 0) {
+        index--;
+        this.selectedSuggestion = this.suggestions[index].suggestion;
+      } else {
+        this.selectedSuggestion = "";
+      }
+    },
+
+    /**
+     * Обработчик события на нажатие Enter
+     */
+    onEnter: function onEnter() {
+      // Остановить процесс формирования поисковых подсказок
+      this.stopSuggestingProcess(); // Если подсказка выбрана, взять ее, иначе текст из строки поиска
+
+      var val = this.selectedSuggestion != "" ? this.selectedSuggestion : this.search; // Изменить строку поиска без вывода подсказок
+
+      this.changeSearchWithoutSuggesting(val); // Сообщить родителю, что строка поиска изменилась 
+      // (можно выполнять поиск)
+
+      this.$emit("search-executed", val); // Очистить список подсказок и выбранную подсказку
+
+      this.clearSuggestions();
+    },
+
+    /**
+     * Обработчик события на нажатие Escape
+     */
+    onEscape: function onEscape() {
+      this.stopSuggestingProcess();
+      this.clearSuggestions();
+    },
+
+    /**
+     * Обработчик события на наведение мышкой на поисковую подсказку
+     */
+    onMouseOver: function onMouseOver(val) {
+      this.selectedSuggestion = val;
+    },
+
+    /**
+     * Обработчик события на покидание мышки поисковой подсказки
+     */
+    onMouseLeave: function onMouseLeave() {
+      this.selectedSuggestion = "";
+    },
+
+    /**
+     * Обработчик события на клик на поисковой подсказке
+     */
+    onSuggestionClick: function onSuggestionClick() {
+      this.onEnter();
+    },
+
+    /**
+     * Обработчик события mousedown на элементе выпадающего списка
+     * (кнопка "очистить историю", поисковая подсказка и т.д.)
+     */
+    onDropdownMouseDown: function onDropdownMouseDown() {
+      // Не очищать список подсказок при потере строкой поиска
+      // фокуса (чтобы сработало событие click на элементе выпадающего списка)
+      this.clearSuggestionsOnBlur = false;
+    },
+
+    /**
+     * Обработчик события на нажатие кнопки "Сбросить поиск"
+     */
+    onClear: function onClear() {
+      var emptySearch = ""; // Сбросить строку поиска без вывода подсказок
+
+      this.changeSearchWithoutSuggesting(emptySearch); // Сообщить родителю, что строка поиска сбросилась 
+      // (например, чтобы закрыть результаты поиска)
+
+      this.$emit("search-clear", emptySearch); // Очистить список подсказок и выбранную подсказку
+
+      this.clearSuggestions();
+    },
+
+    /**
+     * Обработчик события на потерю фокуса полем
+     * для ввода строки поиска
+     */
+    onBlur: function onBlur() {
+      this.stopSuggestingProcess();
+
+      if (this.clearSuggestionsOnBlur) {
+        this.clearSuggestions();
+      } else {
+        this.clearSuggestionsOnBlur = true;
+      }
+    },
+
+    /**
+     * Обработчик события на фокуса поля
+     * для ввода строки поиска
+     */
+    onFocus: function onFocus() {
+      this.onInput();
+    },
+
+    /**
+     * Очистить список подсказок и выбранную подсказку
+     */
+    clearSuggestions: function clearSuggestions() {
+      this.suggestions = [];
+      this.selectedSuggestion = "";
+    },
+
+    /**
+     * Изменить строку поиска без вывода подсказок
+     * @param {string} val новое значение для строки поиска
+     */
+    changeSearchWithoutSuggesting: function changeSearchWithoutSuggesting(val) {
+      if (this.search == val) {
+        return;
+      } // Сбросить флаг suggestWhenSearchChanged, чтобы компонент не начал
+      // заново формировать подсказки
+
+
+      this.suggestWhenSearchChanged = false; // Изменить строку поиска
+
+      this.search = val;
+    },
+
+    /**
+     * Остановить процесс формирования поисковых подсказок:
+     * 1) debounce ввода в строке поиска
+     * 2) проверку спеллера
+     * 3) загрузку подсказок
+     */
+    stopSuggestingProcess: function stopSuggestingProcess() {
+      if (this.axiosRequest) {
+        this.axiosRequest.cancel();
+      }
+
+      this.requestsExecuting = false;
+    },
+
+    /**
+     * Сбросить строку поиска
+     */
+    clear: function clear() {
+      this.onClear();
+    },
+
+    /**
+     * Программно установить строку поиска без вывода подсказок
+     * @param {string} search
+     */
+    setSearch: function setSearch(search) {
+      this.changeSearchWithoutSuggesting(search);
+    },
+
+    /**
+     * Очистить историю запросов пользователя
+     */
+    clearHistory: function clearHistory() {
+      this.clearSuggestions();
+      axios.post(this.clearHistoryEndpoint).then(function (response) {})["catch"](function (thrown) {});
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./public_html/js/pages/index/general-search-index.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./public_html/js/pages/index/general-search-index.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var appJs_i18n_mixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! appJs/i18n-mixin */ "./public_html/js/app/i18n-mixin.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/**
+ * Компонент отображает строку поиска на главной странице сайта.
+ */
+// Поиск
+Vue.component("search", __webpack_require__(/*! appJs/search.vue */ "./public_html/js/app/search.vue")["default"]); // Локализация
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [appJs_i18n_mixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  data: function data() {
+    return {
+      // Локализация компонента
+      i18n: {
+        en: {
+          "Найти услуги": "Search",
+          "Какая услуга вас интересует?": "What service are you looking for?",
+          "Поиск услуг": "Services"
+        }
+      }
+    };
+  },
+
+  /**
+   * Created event
+   */
+  created: function created() {
+    // Инициализировать mixin локализации
+    this.i18nInit();
+  },
+  methods: {
+    /**
+     * Обработчик события на выполнение поиска
+     * @param {string} search строка поиска
+     */
+    onSearchExecuted: function onSearchExecuted(search) {
+      // Добавление открытия окна регистрации для незареганых
+      var additionalArgs = '';
+      var userId = USER_ID || 0;
+      userId = parseInt(userId);
+
+      if (userId < 1) {
+        Cookies.set('registerPopupForce', '1', {
+          expires: 2,
+          path: '/',
+          SameSite: 'Lax'
+        });
+      } // Сформировать url для запуска поиска
+
+
+      var encodedQuery = $.param({
+        'query': search
+      });
+      var url = window.location.origin + "/search?" + encodedQuery + "&c=0"; // Редирект на сформированный url
+
+      window.location.href = url;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./public_html/js/app/search.vue?vue&type=template&id=6d3d6370&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./public_html/js/app/search.vue?vue&type=template&id=6d3d6370& ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "custom-search" }, [
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.search,
+          expression: "search"
+        }
+      ],
+      staticClass: "form-control",
+      class: _vm.inputClass,
+      attrs: { type: "text", placeholder: _vm.placeholder },
+      domProps: { value: _vm.search },
+      on: {
+        input: [
+          function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          },
+          function($event) {
+            _vm.search = $event.target.value
+          }
+        ],
+        keydown: [
+          function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "up", 38, $event.key, ["Up", "ArrowUp"])
+            ) {
+              return null
+            }
+            $event.preventDefault()
+            return _vm.onArrowUp($event)
+          },
+          function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "down", 40, $event.key, [
+                "Down",
+                "ArrowDown"
+              ])
+            ) {
+              return null
+            }
+            $event.preventDefault()
+            return _vm.onArrowDown($event)
+          },
+          function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            $event.preventDefault()
+            return _vm.onEnter($event)
+          }
+        ],
+        keyup: function($event) {
+          if (
+            !$event.type.indexOf("key") &&
+            _vm._k($event.keyCode, "esc", 27, $event.key, ["Esc", "Escape"])
+          ) {
+            return null
+          }
+          $event.preventDefault()
+          return _vm.onEscape($event)
+        },
+        blur: _vm.onBlur,
+        focus: _vm.onFocus
+      }
+    }),
+    _vm._v(" "),
+    _vm.showClearButton
+      ? _c(
+          "span",
+          {
+            staticClass: "clear-button",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.onClear($event)
+              }
+            }
+          },
+          [_vm._t("clear-button", [_vm._v("×")])],
+          2
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "span",
+      {
+        staticClass: "search-button",
+        class: [_vm.hasSuggestions ? "has-suggestions" : ""],
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.onEnter($event)
+          }
+        }
+      },
+      [_vm._t("search-button", [_vm._m(0)])],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.suggestions.length > 0,
+            expression: "suggestions.length > 0"
+          }
+        ],
+        staticClass: "dropdown"
+      },
+      [
+        _vm.historySuggested
+          ? _c(
+              "div",
+              { staticClass: "history d-flex justify-content-between" },
+              [
+                _c("div", { staticClass: "d-inline-block" }, [
+                  _vm._v(_vm._s(_vm.t("Недавний поиск")))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "d-inline-block clear-history-button",
+                    on: {
+                      mousedown: _vm.onDropdownMouseDown,
+                      click: _vm.clearHistory
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n\t\t\t\t" + _vm._s(_vm.t("Очистить")) + "\n\t\t\t"
+                    )
+                  ]
+                )
+              ]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.suggestionsHeader && !_vm.historySuggested
+          ? _c("div", { staticClass: "suggestions-header" }, [
+              _c("div", [_vm._v(_vm._s(_vm.suggestionsHeader))])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "suggestions" },
+          _vm._l(_vm.suggestions, function(suggestion) {
+            return _c(
+              "div",
+              {
+                staticClass: "suggestion d-flex justify-content-start",
+                class: {
+                  selected: suggestion.suggestion == _vm.selectedSuggestion
+                },
+                on: {
+                  mouseover: function($event) {
+                    return _vm.onMouseOver(suggestion.suggestion)
+                  },
+                  mouseleave: _vm.onMouseLeave,
+                  mousedown: _vm.onDropdownMouseDown,
+                  click: _vm.onSuggestionClick
+                }
+              },
+              [
+                _c("div", { staticClass: "d-inline-block" }, [
+                  _c("span", {
+                    domProps: { innerHTML: _vm._s(suggestion.excerpt) }
+                  })
+                ])
+              ]
+            )
+          }),
+          0
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "fa-stack text-success" }, [
+      _c("i", { staticClass: "fa fa-square fa-stack-2x" }),
+      _vm._v(" "),
+      _c("i", { staticClass: "fa fa-search fa-stack-1x fa-inverse" })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./public_html/js/pages/index/general-search-index.vue?vue&type=template&id=16bbb214&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./public_html/js/pages/index/general-search-index.vue?vue&type=template&id=16bbb214& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "search",
+    {
+      staticClass: "general-search-index d-none d-md-block",
+      attrs: {
+        "suggestions-endpoint": "/general-search/suggest",
+        "clear-history-endpoint": "/general-search/clear-history",
+        placeholder: _vm.t("Какая услуга вас интересует?"),
+        "suggestions-header": _vm.t("Поиск услуг")
+      },
+      on: { "search-executed": _vm.onSearchExecuted }
+    },
+    [
+      _c("template", { slot: "clear-button" }),
+      _vm._v(" "),
+      _c("template", { slot: "search-button" }, [
+        _c("button", { staticClass: "button button-success" }, [
+          _vm._v(_vm._s(_vm.t("Найти услуги")))
+        ])
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ "./public_html/js/app/i18n-mixin.js":
+/*!******************************************!*\
+  !*** ./public_html/js/app/i18n-mixin.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/**
+ * Mixin добавляет возможность локализации компонент. Перед использованием необходимо
+ * вызвать метод i18nInit (например, в событии created). Далее в шаблоне .vue можно
+ * локализовать строки при помощи метода t() или в скрипте, вызвав this.t().
+ * 
+ * В локализуемых строках можно использовать подстановки, например:
+ *   t("это строка с первой {{0}} и второй {{1}} подстановками", ["подстановка 1", "подстановка 2"]);
+ *   
+ * Каждый компонент должен сам задавать свои переводы, например:
+ *   data () {
+ *     return {
+ *       i18n: {
+ *         en: {
+ *           "строка на русском": "строка на английском",
+ *            ...
+ *         },
+ *       },
+ *     };
+ *   },
+ *
+ * Если для строки требуется множественное число, то переводы задаются следующим образом:
+ *   data () {
+ *     return {
+ *       i18n: {
+ *         ru: {
+ *           "{{0}} яблоко": {
+ *             0: "{{0}} яблоко",
+ *             1: "{{0}} яблока",
+ *             2: "{{0}} яблок",
+ *           },
+ *         },
+ *         en: {
+ *           "{{0}} яблоко": {
+ *             0: "{{0}} apple",
+ *             1: "{{0}} apples",
+ *           },
+ *         },
+ *       },
+ *     };
+ *   },
+ */
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      // Данные для переводов
+      i18n: null,
+      // Текущая локаль
+      locale: "ru",
+      // Локаль по умолчанию
+      defaultLocale: "ru"
+    };
+  },
+  methods: {
+    /**
+     * Инициализация mixin
+     */
+    i18nInit: function i18nInit() {
+      // Получить текущую локаль
+      this.locale = document.documentElement.lang;
+    },
+
+    /**
+     * Форсировать локаль
+     */
+    i18nForceLocale: function i18nForceLocale(locale) {
+      this.locale = locale;
+    },
+
+    /**
+     * Локализовать сообщение
+     * @param {string} msgid
+     * @param {array} placeholders
+     * @return {string}
+     */
+    t: function t(msgid, placeholders) {
+      // Если текущая локаль совпадает с дефолтной
+      if (this.locale == this.defaultLocale) {
+        return this.replacePlaceholders(msgid, placeholders);
+      } // Если не совпадает, должны быть заданы переводы
+
+
+      if (this.i18n) {
+        // Для текущей локали
+        if (this.i18n.hasOwnProperty(this.locale)) {
+          // Для конкретной строки
+          if (this.i18n[this.locale].hasOwnProperty(msgid)) {
+            var message = this.i18n[this.locale][msgid]; // Вернуть локализованную строку с замененными placeholders
+
+            return this.replacePlaceholders(message, placeholders);
+          }
+        }
+      }
+
+      return msgid;
+    },
+
+    /**
+     * Локализовать сообщение для множественного чила
+     * @param {string} msgid
+     * @param {number} count
+     * @param {array} placeholders
+     * @return {string}
+     */
+    tn: function tn(msgid, count, placeholders) {
+      // Должны быть заданы переводы
+      if (this.i18n) {
+        // Для текущей локали
+        if (this.i18n.hasOwnProperty(this.locale)) {
+          // Для конкретной строки
+          if (this.i18n[this.locale].hasOwnProperty(msgid)) {
+            // Должны быть заданы все формы, а не конкретный перевод
+            var pluralForms = this.i18n[this.locale][msgid];
+
+            if (Array.isArray(pluralForms)) {
+              // Кол-во форм должно соответствовать локали
+              // (для русской - 3, для английской - 2)
+              if (pluralForms.length == this.getPluralFormsCount()) {
+                // Определить форму по кол-ву
+                var pluralFormIndex = this.getPluralForm(count); // Найти перевод для формы
+
+                var message = this.i18n[this.locale][msgid][pluralFormIndex]; // Вернуть локализованную строку с замененными placeholders
+
+                return this.replacePlaceholders(message, placeholders);
+              }
+            }
+          }
+        }
+      }
+
+      return msgid;
+    },
+
+    /**
+     * Получить форму для множественного числа
+     * (в русском - 3 формы, в английском - 2)
+     * @param {number} count
+     * @return {number}
+     */
+    getPluralForm: function getPluralForm(count) {
+      if (this.locale == "ru") {
+        if (count % 10 == 1 && count % 100 != 11) {
+          return 0;
+        } else {
+          if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) {
+            return 1;
+          } else {
+            return 2;
+          }
+        }
+      } else {
+        return count > 1 ? 1 : 0;
+      }
+    },
+
+    /**
+     * Кол-во форм множественного числа для текущей локали
+     * @return {number}
+     */
+    getPluralFormsCount: function getPluralFormsCount() {
+      return this.locale == "ru" ? 3 : 2;
+    },
+
+    /**
+     * Заменить placeholders ({{0}}, {{1}} и т.д.)
+     * @param {string} message
+     * @param {array} placeholders
+     * @return {string}
+     */
+    replacePlaceholders: function replacePlaceholders(message, placeholders) {
+      if (!placeholders) {
+        return message;
+      }
+
+      for (var i = 0; i < placeholders.length; i++) {
+        message = message.replace('{{' + i + '}}', placeholders[i]);
+      }
+
+      return message;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./public_html/js/app/search.vue":
+/*!***************************************!*\
+  !*** ./public_html/js/app/search.vue ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _search_vue_vue_type_template_id_6d3d6370___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search.vue?vue&type=template&id=6d3d6370& */ "./public_html/js/app/search.vue?vue&type=template&id=6d3d6370&");
+/* harmony import */ var _search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./search.vue?vue&type=script&lang=js& */ "./public_html/js/app/search.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _search_vue_vue_type_template_id_6d3d6370___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _search_vue_vue_type_template_id_6d3d6370___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "public_html/js/app/search.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./public_html/js/app/search.vue?vue&type=script&lang=js&":
+/*!****************************************************************!*\
+  !*** ./public_html/js/app/search.vue?vue&type=script&lang=js& ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./search.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./public_html/js/app/search.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./public_html/js/app/search.vue?vue&type=template&id=6d3d6370&":
+/*!**********************************************************************!*\
+  !*** ./public_html/js/app/search.vue?vue&type=template&id=6d3d6370& ***!
+  \**********************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_search_vue_vue_type_template_id_6d3d6370___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./search.vue?vue&type=template&id=6d3d6370& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./public_html/js/app/search.vue?vue&type=template&id=6d3d6370&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_search_vue_vue_type_template_id_6d3d6370___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_search_vue_vue_type_template_id_6d3d6370___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./public_html/js/pages/index/bootstrap.js":
+/*!*************************************************!*\
+  !*** ./public_html/js/pages/index/bootstrap.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Уже используется в общем поиске в шапке
+ * public_html/js/pages/general-search/bootstrap.js
+ *
+ * require('appJs/bootstrap.js');
+ */
+Vue.component("general-search-index", __webpack_require__(/*! ./general-search-index.vue */ "./public_html/js/pages/index/general-search-index.vue")["default"]);
+var app = new Vue({
+  el: '#app'
+});
+
+/***/ }),
+
+/***/ "./public_html/js/pages/index/general-search-index.vue":
+/*!*************************************************************!*\
+  !*** ./public_html/js/pages/index/general-search-index.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _general_search_index_vue_vue_type_template_id_16bbb214___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./general-search-index.vue?vue&type=template&id=16bbb214& */ "./public_html/js/pages/index/general-search-index.vue?vue&type=template&id=16bbb214&");
+/* harmony import */ var _general_search_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./general-search-index.vue?vue&type=script&lang=js& */ "./public_html/js/pages/index/general-search-index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _general_search_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _general_search_index_vue_vue_type_template_id_16bbb214___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _general_search_index_vue_vue_type_template_id_16bbb214___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "public_html/js/pages/index/general-search-index.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./public_html/js/pages/index/general-search-index.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./public_html/js/pages/index/general-search-index.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_general_search_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./general-search-index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./public_html/js/pages/index/general-search-index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_general_search_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./public_html/js/pages/index/general-search-index.vue?vue&type=template&id=16bbb214&":
+/*!********************************************************************************************!*\
+  !*** ./public_html/js/pages/index/general-search-index.vue?vue&type=template&id=16bbb214& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_general_search_index_vue_vue_type_template_id_16bbb214___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./general-search-index.vue?vue&type=template&id=16bbb214& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./public_html/js/pages/index/general-search-index.vue?vue&type=template&id=16bbb214&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_general_search_index_vue_vue_type_template_id_16bbb214___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_general_search_index_vue_vue_type_template_id_16bbb214___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ 4:
+/*!*******************************************************!*\
+  !*** multi ./public_html/js/pages/index/bootstrap.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /Users/sc/Documents/GitHub/kwork.ru/public_html/js/pages/index/bootstrap.js */"./public_html/js/pages/index/bootstrap.js");
+
+
+/***/ })
+
+/******/ });

@@ -11,6 +11,18 @@
 	{strip}
 		<div class="centerwrap clearfix pt20 block-response">
 			<h1 class="f32 orders-title">{'Заказы'|t}</h1>
+
+			<div class="order">
+				<div class="order__avatar">
+					<img class="order__img" src="{'/2.png'|cdnMembersProfilePicUrl}" alt="...">
+				</div>
+				<div class="order__content">
+					<h5 class="order__title">Баннер для сайта</h5>
+					<div class="order__status">Покупатель онлайн <i class="order__circle-online"></i></div>
+					<button class="order__btn">Отправить сообщение</button>
+				</div>
+			</div>
+
 			{if $orders|@count eq "0" && $searchQuery eq null}
 				<div class="mt25 font-OpenSans t-align-c">
 					{'Здесь будут отображаться Ваши заказы'|t}

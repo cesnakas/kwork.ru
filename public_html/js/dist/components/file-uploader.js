@@ -1,1 +1,836 @@
-!function(e){var t={};function n(i){if(t[i])return t[i].exports;var a=t[i]={i:i,l:!1,exports:{}};return e[i].call(a.exports,a,a.exports,n),a.l=!0,a.exports}n.m=e,n.c=t,n.d=function(e,t,i){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:i})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var a in e)n.d(i,a,function(t){return e[t]}.bind(null,a));return i},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="/",n(n.s=160)}({160:function(e,t,n){e.exports=n(161)},161:function(e,n){function i(e,t,n,i){var a,r,l,o=window.jQuery,s=t,d=n,c={},u=!0===i,f=function(){var t=o('<div class="file-item file-uploader__item">'),n=m(s.name);t.append('<i class="file-item__ext '+n+'">');var i=o('<span class="file-item__name">').text(s.name);t.append(i);var r=o('<a class="file-item__action">');r.append('<i class="file-item__action-ico">'),t.append(r);var l=o('<div class="file-item__error hidden">');t.append(l);var f=o('<div class="file-item__loader" style="width: 0">');t.append(f);var p=o('<input type="hidden" name="'+d.input.name+'[delete][]">'),_=o('<input type="hidden" name="'+d.input.name+'[new][]">');(c={$container:t,$name:i,$actionBtn:r,$deleteInput:p,$newInput:_,$error:l,$loader:f}).$actionBtn.on("click",(function(){if(u)F("error")||e.__totalFiles("dec"),w(u),void 0!==a&&0==a.status&&a.abort(),e.__removeFileBlock(s.name);else{if(c.$container.data("onDelete"))e.__totalFiles()<e.__maxFileCount()&&(e.__totalFiles("inc"),C());else{var t=e.__getOptions();if(t.deleteCallback){t.deleteCallback(s,(function(){S()}))}else e.__totalFiles("dec"),$()}o(d.selector).trigger("fileUploader.change")}B()}))},p=function(){c.$loader.addClass("file-item__loader_success").animate({opacity:0}),c.$container.data("uploaded",!0);try{var t=JSON.parse(this.responseText)}catch(e){t={result:"error"}}"success"===t.result?g(t.file_id):(y("error"),x(t.reason),e.__totalFiles("dec"),k("success"))},_=function(){y("error"),x("default"),e.__totalFiles("dec")},h=function(e){var t=e.loaded/e.total*100^0;c.$loader.css("width",t+"%")},v=function(){k("abort")},g=function(e){e^=0,c.$newInput.val(e),c.$container.append(c.$newInput),k("success")},m=function(e){var t=e.length,n=e.substr(t-3,t).toLowerCase(),i=e.substr(t-4,t).toLowerCase();return-1!=o.inArray(n,["doc","xls","rtf","txt"])||-1!=o.inArray(i,["docx","xlsx"])?"ico-file-doc":-1!=o.inArray(n,["zip","rar"])?"ico-file-zip":-1!=o.inArray(n,["png","jpg","gif","psd"])||-1!=o.inArray(i,["jpeg"])?"ico-file-image":-1!=o.inArray(n,["mp3","wav","avi"])?"ico-file-audio":"ico-file-zip"},b=function(){return s.size<=l},w=function(e){c.$container.animate({opacity:0,height:0,margin:0},200,(function(){e&&(c.$container.remove(),c=null),o(d.selector).trigger("fileUploader.change")}))},y=function(e){switch(e){case"deleted":c.$container.addClass("file-item_type_deleted");break;case"error":c.$container.addClass("file-item_type_error")}},F=function(e){switch(e){case"deleted":var t=c.$container.hasClass("file-item_type_deleted");break;case"error":t=c.$container.hasClass("file-item_type_error")}return t},x=function(e){var t=d.errors.default;d.errors[e]&&(t=d.errors[e]),c.$error.html(t).removeClass("hidden")},$=function(){s.id&&(y("deleted"),c.$container.append(c.$deleteInput),c.$deleteInput.val(s.id),c.$container.data("onDelete",!0))},C=function(){!function(e){switch(e){case"deleted":c.$container.removeClass("file-item_type_deleted");break;case"error":c.$container.removeClass("file-item_type_error")}}("deleted"),c.$deleteInput.detach(),c.$container.data("onDelete",!1)},k=function(e){r=e},S=function(){null!==c&&(c.$container.remove(),e.__totalFiles("dec"))},B=function(){d.onChange&&d.onChange()};return f(),l=1048576*d.maxSize,{upload:function(){if(!b())return y("error"),x("file_size_exceed"),e.__totalFiles("dec"),!1;a=new XMLHttpRequest;var t=new FormData;t.append("upload_files",s),"undefined"!=typeof kworkLang&&t.append("lang",kworkLang),a.addEventListener("load",p),a.addEventListener("error",_),a.addEventListener("abort",v),a.upload.onprogress=h,a.open("POST","/api/file/upload",!0),k("load"),a.send(t)},get:function(){return c.$container},getFileName:function(){return s.name},status:function(){return r},destroy:S,hideError:function(){c.$error.html("").addClass("hidden")},checkError:function(){return c.$container.hasClass("file-item_type_error")},onChangeFile:B}}window.FileUploader=function(e){"use strict";var n,a=window.jQuery,r={lang:{withFiles:t("Прикрепить ещё файл"),withoutFiles:t("Прикрепить файл")},errors:{default:t("Ошибка загрузки изображения"),file_size_exceed:t('Файл больше {{0}}Мб не отправится. Используйте файлообменник, например, <a href="https://disk.yandex.ru/" target="_blank">Яндекс.Диск</a>.',[config.files.maxSize]),no_file_uploaded:t("Не загружен файл"),not_allowed:t("Тип файла недопустим для загрузки"),user_non_authorized:t("Пользователь не авторизирован"),invalid_filename:t("Название файла должно быть на английском")},isMultiple:!0,maxFiles:config.files.maxCount,maxSize:config.files.maxSize},l={},o=0,s=[],d=!0;this.__construct=function(e){a.extend(r,e),a.extend(r.lang,{hint:t("до {{0}} файлов не более {{1}} Мб",[r.maxFiles,r.maxSize])}),n=this,l.container=a(r.selector);var i=l.container.data("allowUpload");void 0!==i&&(d=!!i),f(),p(),_(),void 0!==r.files&&r.files.length?v(r.lang.withFiles):v(r.lang.withoutFiles),this.__setEvents()};var c=function(){return r.hasOwnProperty("isMultiple")&&!1===r.isMultiple?1:0^r.maxFiles};this.__maxFileCount=c;var u=function(e){return isNaN(o)&&(o=0),"inc"===e?(++o>=c()&&l.fileAddButton.hide(),a(window).trigger("changeFileCount.fileUploader"),o):"dec"===e?(--o<c()&&l.fileAddButton.show(),a(window).trigger("changeFileCount.fileUploader"),o=o<0?0:o):o};this.__totalFiles=u;var f=function(){var e=a('<input type="file" class="file-uploader__file-input">');r.isMultiple&&e.prop("multiple",!0),l.fileInput=e;var t=a('<label class="file-uploader__add d-flex_kwork-edit flex-wrap justify-content-between align-items-baseline">'),n=a('<div class="mr5">');n.append(l.fileInput),t.append(n),n.append('<i class="icon ico-clip file-uploader__add-ico"></i>');var i=a('<span class="file-uploader__add-text"></span>');if(n.append(i),r.lang.hasOwnProperty("hint")){var o=a('<span class="file-uploader__add-hint">'+r.lang.hint+"</span>");t.append(o)}l.fileAddButton=t,l.fileAddButtonLabel=i,l.container.append(t),d||l.fileAddButton.hide()},p=function(){l.loadFileList=a('<div class="load-file__list">'),l.container.append(l.loadFileList)};this.__setEvents=function(){var e=this;l.fileInput.on("change",(function(){v(r.lang.withFiles);for(var t=0;t<this.files.length;t++){if(u()>=c())break;if(this.files[t]){var n=new i(e,this.files[t],r,!0);l.loadFileList.append(n.get()),u("inc"),n.upload(),s.push(n)}}if(l.container.trigger("fileUploader.change"),a(this).val(""),!e.__canSave()){var o=setInterval((function(){e.__canSave()&&(clearInterval(o),e.__enableButton(),n.onChangeFile())}),100);return e.__disableButton(),n.onChangeFile(),!1}return!1}))};var _=function(){if(void 0!==r.files&&r.files.length)for(var e=0;e<r.files.length;e++){var t=r.files[e];if(t){var a=new i(n,t,r);l.loadFileList.append(a.get()),u("inc")}}},h=function(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0];if(void 0!==r.files&&r.files.length)for(var t=0;t<r.files.length;t++){var a=r.files[t];if(a){var o=new i(n,a,r,e);l.loadFileList.append(o.get()),u("inc"),s.push(o)}}},v=function(e){l.fileAddButtonLabel.text(e)};return this.__construct(e),this.__canSave=function(){for(var e=0;e<s.length;e++){var t=s[e];if("load"==t.status()||t.checkError())return!1}return!0},this.__hasErrors=function(){for(var e=0;e<s.length;e++){if(s[e].checkError())return!0}return!1},this.__canUpload=function(e){return void 0!==e&&(d=e,l.fileAddButton.toggle(d)),d},this.__clear=function(){for(var e=Object.keys(s),t=0;t<e.length;t++){var n=e[t];s[n].destroy(),delete s[n]}return s=[],v(r.lang.withoutFiles),!0},this.__removeFileBlock=function(e){s=s.filter((function(t){return t.getFileName()!=e}))},this.__getOptions=function(){return r},this.__disableButton=function(){void 0!==r.buttonDisabled&&a(r.buttonDisabled).prop("disabled",!0).attr("disabled",!0).addClass("disabled btn_no-hover")},this.__enableButton=function(){void 0!==r.buttonDisabled&&a(r.buttonDisabled).prop("disabled",!1).attr("disabled",!1).removeClass("disabled btn_no-hover")},{totalFiles:u,hasErrors:this.__hasErrors,canSave:this.__canSave,canUpload:this.__canUpload,clear:this.__clear,update:function(e){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1];r.files=e,h(t),void 0!==r.files&&r.files.length?v(r.lang.withFiles):v(r.lang.withoutFiles)}}}}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./public_html/js/components/file-uploader.js":
+/*!****************************************************!*\
+  !*** ./public_html/js/components/file-uploader.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ *
+ * @param o {{
+ *              files: [],
+ *              isMultiple: {Bool},
+ *              lang: {
+ *                  withFiles: {String},
+ *                  withoutFiles: {String},
+ *                  hint: {String}
+ *              },
+ *              input: {
+ *                  name: {String},
+ *
+ *              },
+ *              selector: {string}
+ *          }}
+ * @returns {{}}
+ * @constructor
+ */
+window.FileUploader = function (o) {
+  "use strict";
+
+  var $ = window.jQuery;
+  var _options = {
+    lang: {
+      withFiles: t('Прикрепить ещё файл'),
+      withoutFiles: t('Прикрепить файл')
+    },
+    errors: {
+      "default": t('Ошибка загрузки изображения'),
+      file_size_exceed: t("Файл больше {{0}}Мб не отправится. Используйте файлообменник, например, <a href=\"https://disk.yandex.ru/\" target=\"_blank\">Яндекс.Диск</a>.", [config.files.maxSize]),
+      no_file_uploaded: t('Не загружен файл'),
+      not_allowed: t('Тип файла недопустим для загрузки'),
+      user_non_authorized: t('Пользователь не авторизирован'),
+      invalid_filename: t('Название файла должно быть на английском')
+    },
+    isMultiple: true,
+    maxFiles: config.files.maxCount,
+    maxSize: config.files.maxSize
+  };
+  var __blocks = {};
+  var __totalFilesCount = 0;
+  var __fileBlocks = [];
+
+  var __self;
+
+  var __allowUpload = true;
+
+  this.__construct = function (o) {
+    $.extend(_options, o);
+    $.extend(_options.lang, {
+      hint: t('до {{0}} файлов не более {{1}} Мб', [_options.maxFiles, _options.maxSize])
+    });
+    __self = this;
+    __blocks.container = $(_options.selector);
+
+    var allowUpload = __blocks.container.data('allowUpload');
+
+    if (typeof allowUpload !== 'undefined') {
+      __allowUpload = !!allowUpload;
+    }
+
+    __setFileInput();
+
+    __setFileListBlock();
+
+    __setAvailFiles();
+
+    if (typeof _options.files !== 'undefined' && _options.files.length) {
+      __setAddButtonLabel(_options.lang.withFiles);
+    } else {
+      __setAddButtonLabel(_options.lang.withoutFiles);
+    }
+
+    this.__setEvents();
+  };
+  /*
+  *	@param  {array} files - список файлов
+  *	@param  {array} isNew - файл счиать как новыми(влияеть на тип удаления, удалять сразу из списка или только после отправки)
+  */
+
+
+  var __update = function __update(files) {
+    var isNew = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    _options['files'] = files;
+
+    __setFileBlocks(isNew);
+
+    if (typeof _options.files !== 'undefined' && _options.files.length) {
+      __setAddButtonLabel(_options.lang.withFiles);
+    } else {
+      __setAddButtonLabel(_options.lang.withoutFiles);
+    }
+  };
+
+  var __maxFileCount = function __maxFileCount() {
+    if (_options.hasOwnProperty('isMultiple') && _options.isMultiple === false) {
+      return 1;
+    }
+
+    return _options.maxFiles ^ 0;
+  };
+
+  this.__maxFileCount = __maxFileCount;
+
+  var __totalFiles = function __totalFiles(action) {
+    if (isNaN(__totalFilesCount)) {
+      __totalFilesCount = 0;
+    }
+
+    if (action === 'inc') {
+      __totalFilesCount++;
+
+      if (__totalFilesCount >= __maxFileCount()) {
+        __blocks.fileAddButton.hide();
+      }
+
+      $(window).trigger('changeFileCount.fileUploader');
+      return __totalFilesCount;
+    } else if (action === 'dec') {
+      __totalFilesCount--;
+
+      if (__totalFilesCount < __maxFileCount()) {
+        __blocks.fileAddButton.show();
+      }
+
+      $(window).trigger('changeFileCount.fileUploader');
+      __totalFilesCount = __totalFilesCount < 0 ? 0 : __totalFilesCount;
+      return __totalFilesCount;
+    }
+
+    return __totalFilesCount;
+  };
+
+  this.__totalFiles = __totalFiles;
+
+  var __setFileInput = function __setFileInput() {
+    var $fileInput = $('<input type="file" class="file-uploader__file-input">');
+
+    if (_options.isMultiple) {
+      $fileInput.prop('multiple', true);
+    }
+
+    __blocks.fileInput = $fileInput;
+    var $fileInputContainer = $('<label class="file-uploader__add d-flex_kwork-edit flex-wrap justify-content-between align-items-baseline">');
+    var $fileAddButtonContainer = $('<div class="mr5">');
+    $fileAddButtonContainer.append(__blocks.fileInput);
+    $fileInputContainer.append($fileAddButtonContainer);
+    $fileAddButtonContainer.append('<i class="icon ico-clip file-uploader__add-ico"></i>');
+    var $fileAddButtonLabel = $('<span class="file-uploader__add-text"></span>');
+    $fileAddButtonContainer.append($fileAddButtonLabel);
+
+    if (_options.lang.hasOwnProperty('hint')) {
+      var $hint = $('<span class="file-uploader__add-hint">' + _options.lang.hint + '</span>');
+      $fileInputContainer.append($hint);
+    }
+
+    __blocks.fileAddButton = $fileInputContainer;
+    __blocks.fileAddButtonLabel = $fileAddButtonLabel;
+
+    __blocks.container.append($fileInputContainer);
+
+    if (!__allowUpload) {
+      __blocks.fileAddButton.hide();
+    }
+  };
+
+  var __setFileListBlock = function __setFileListBlock() {
+    __blocks.loadFileList = $('<div class="load-file__list">');
+
+    __blocks.container.append(__blocks.loadFileList);
+  };
+
+  this.__setEvents = function () {
+    var self = this;
+
+    __blocks.fileInput.on('change', function () {
+      __setAddButtonLabel(_options.lang.withFiles);
+
+      for (var i = 0; i < this.files.length; i++) {
+        var totalFiles = __totalFiles();
+
+        var maxFileCount = __maxFileCount();
+
+        if (totalFiles >= maxFileCount) {
+          break;
+        }
+
+        if (this.files[i]) {
+          var fileBlock = new FileUploaderItem(self, this.files[i], _options, true);
+
+          __blocks.loadFileList.append(fileBlock.get());
+
+          __totalFiles('inc');
+
+          fileBlock.upload();
+
+          __fileBlocks.push(fileBlock);
+        }
+      }
+
+      __blocks.container.trigger('fileUploader.change');
+
+      $(this).val('');
+
+      if (!self.__canSave()) {
+        var interval = setInterval(function () {
+          if (self.__canSave()) {
+            clearInterval(interval);
+
+            self.__enableButton();
+
+            fileBlock.onChangeFile();
+          }
+        }, 100);
+
+        self.__disableButton();
+
+        fileBlock.onChangeFile();
+        return false;
+      }
+
+      return false;
+    });
+  };
+
+  var __setAvailFiles = function __setAvailFiles() {
+    if (typeof _options.files == 'undefined' || !_options.files.length) {
+      return;
+    }
+
+    for (var i = 0; i < _options.files.length; i++) {
+      var file = _options.files[i];
+
+      if (file) {
+        var fileBlock = new FileUploaderItem(__self, file, _options);
+
+        __blocks.loadFileList.append(fileBlock.get());
+
+        __totalFiles('inc');
+      }
+    }
+  };
+  /*
+   * Вариация функции _setAvailFiles заполняем еще и массив __fileBlocks 
+   * (для корректной работы если у нас есть прикрепленные файлы)
+  */
+
+
+  var __setFileBlocks = function __setFileBlocks() {
+    var isNew = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+    if (typeof _options.files == 'undefined' || !_options.files.length) {
+      return;
+    }
+
+    for (var i = 0; i < _options.files.length; i++) {
+      var file = _options.files[i];
+
+      if (file) {
+        var fileBlock = new FileUploaderItem(__self, file, _options, isNew);
+
+        __blocks.loadFileList.append(fileBlock.get());
+
+        __totalFiles('inc');
+
+        __fileBlocks.push(fileBlock);
+      }
+    }
+  };
+
+  var __setAddButtonLabel = function __setAddButtonLabel(text) {
+    __blocks.fileAddButtonLabel.text(text);
+  };
+
+  this.__construct(o);
+
+  this.__canSave = function () {
+    for (var i = 0; i < __fileBlocks.length; i++) {
+      var fBlock = __fileBlocks[i];
+
+      if (fBlock.status() == 'load' || fBlock.checkError()) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  this.__hasErrors = function () {
+    for (var i = 0; i < __fileBlocks.length; i++) {
+      var fBlock = __fileBlocks[i];
+
+      if (fBlock.checkError()) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  this.__canUpload = function (canUpload) {
+    if (typeof canUpload !== 'undefined') {
+      __allowUpload = canUpload;
+
+      __blocks.fileAddButton.toggle(__allowUpload);
+    }
+
+    return __allowUpload;
+  };
+
+  this.__clear = function () {
+    var keys = Object.keys(__fileBlocks);
+
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+
+      __fileBlocks[key].destroy();
+
+      delete __fileBlocks[key];
+    }
+
+    __fileBlocks = [];
+
+    __setAddButtonLabel(_options.lang.withoutFiles);
+
+    return true;
+  };
+
+  this.__removeFileBlock = function (fileBlockName) {
+    __fileBlocks = __fileBlocks.filter(function (e) {
+      return e.getFileName() != fileBlockName;
+    });
+  };
+
+  this.__getOptions = function () {
+    return _options;
+  };
+  /**
+   * Блокировать кнопку отправки формы
+   * @private
+   */
+
+
+  this.__disableButton = function () {
+    if (typeof _options.buttonDisabled !== 'undefined') {
+      $(_options.buttonDisabled).prop('disabled', true).attr('disabled', true).addClass('disabled btn_no-hover');
+    }
+  };
+  /**
+   * Разблокировать кнопку отправки формы
+   * @private
+   */
+
+
+  this.__enableButton = function () {
+    if (typeof _options.buttonDisabled !== 'undefined') {
+      $(_options.buttonDisabled).prop('disabled', false).attr('disabled', false).removeClass('disabled btn_no-hover');
+    }
+  };
+
+  return {
+    totalFiles: __totalFiles,
+    hasErrors: this.__hasErrors,
+    canSave: this.__canSave,
+    canUpload: this.__canUpload,
+    clear: this.__clear,
+    update: __update
+  };
+};
+
+function FileUploaderItem(uploadFilesObject, file, options, isNew) {
+  var $ = window.jQuery;
+  var API_URL = "/api/file/upload";
+  var _file = file;
+  var _options = options;
+  var _fileBlock = {};
+
+  var _xhr;
+
+  var _status;
+
+  var _isNew = isNew === true;
+
+  var _maxSizeReal;
+
+  var __construct = function __construct() {
+    _generateFileInfoBlock();
+
+    _maxSizeReal = _options.maxSize * 1048576;
+  };
+
+  var _generateFileInfoBlock = function _generateFileInfoBlock() {
+    var $fileLine = $('<div class="file-item file-uploader__item">');
+
+    var fileIco = _getFileIco(_file.name);
+
+    $fileLine.append('<i class="file-item__ext ' + fileIco + '">');
+    var $fileName = $('<span class="file-item__name">').text(_file.name);
+    $fileLine.append($fileName);
+    var $deleteButton = $('<a class="file-item__action">');
+    $deleteButton.append('<i class="file-item__action-ico">');
+    $fileLine.append($deleteButton);
+    var $error = $('<div class="file-item__error hidden">');
+    $fileLine.append($error);
+    var $loader = $('<div class="file-item__loader" style="width: 0">');
+    $fileLine.append($loader);
+    var $delInput = $('<input type="hidden" name="' + _options.input.name + '[delete][]">');
+    var $newInput = $('<input type="hidden" name="' + _options.input.name + '[new][]">');
+    _fileBlock = {
+      $container: $fileLine,
+      $name: $fileName,
+      $actionBtn: $deleteButton,
+      $deleteInput: $delInput,
+      $newInput: $newInput,
+      $error: $error,
+      $loader: $loader
+    };
+
+    _fileBlock.$actionBtn.on('click', function () {
+      if (_isNew) {
+        if (!_isType('error')) {
+          uploadFilesObject.__totalFiles('dec');
+        }
+
+        _hideBlock(_isNew);
+
+        if (typeof _xhr !== 'undefined' && _xhr.status == 0) {
+          _xhr.abort();
+        }
+
+        uploadFilesObject.__removeFileBlock(_file.name);
+      } else {
+        if (_fileBlock.$container.data('onDelete')) {
+          if (uploadFilesObject.__totalFiles() < uploadFilesObject.__maxFileCount()) {
+            uploadFilesObject.__totalFiles('inc');
+
+            _unmarkDelete();
+          }
+        } else {
+          var options = uploadFilesObject.__getOptions();
+
+          if (options.deleteCallback) {
+            var onSuccessCallback = function onSuccessCallback() {
+              _destroy();
+            };
+
+            options.deleteCallback(_file, onSuccessCallback);
+          } else {
+            uploadFilesObject.__totalFiles('dec');
+
+            _markDelete();
+          }
+        }
+
+        $(_options.selector).trigger('fileUploader.change');
+      }
+
+      _onChangeFile();
+    });
+  };
+
+  var _uploadFile = function _uploadFile() {
+    if (!_checkMaxSize()) {
+      _setType('error');
+
+      _showError('file_size_exceed');
+
+      uploadFilesObject.__totalFiles('dec');
+
+      return false;
+    }
+
+    _xhr = new XMLHttpRequest();
+    var formData = new FormData();
+    formData.append("upload_files", _file);
+
+    if (typeof kworkLang !== 'undefined') {
+      formData.append("lang", kworkLang);
+    }
+
+    _xhr.addEventListener("load", _uploadSuccessEvent);
+
+    _xhr.addEventListener("error", _uploadErrorEvent);
+
+    _xhr.addEventListener("abort", _uploadAbortEvent);
+
+    _xhr.upload.onprogress = _uploadProgressEvent;
+
+    _xhr.open("POST", API_URL, true);
+
+    _setStatus('load');
+
+    _xhr.send(formData);
+  };
+
+  var _uploadSuccessEvent = function _uploadSuccessEvent() {
+    _fileBlock.$loader.addClass('file-item__loader_success').animate({
+      opacity: 0
+    });
+
+    _fileBlock.$container.data('uploaded', true);
+
+    try {
+      var response = JSON.parse(this.responseText);
+    } catch (e) {
+      response = {
+        result: 'error'
+      };
+    }
+
+    if (response.result === 'success') {
+      _addFileIdInput(response.file_id);
+    } else {
+      _setType('error');
+
+      _showError(response.reason);
+
+      uploadFilesObject.__totalFiles('dec');
+
+      _setStatus('success');
+    }
+  };
+
+  var _uploadErrorEvent = function _uploadErrorEvent() {
+    _setType('error');
+
+    _showError('default');
+
+    uploadFilesObject.__totalFiles('dec');
+  };
+
+  var _uploadProgressEvent = function _uploadProgressEvent(e) {
+    var widthPercent = e.loaded / e.total * 100 ^ 0;
+
+    _fileBlock.$loader.css('width', widthPercent + '%');
+  };
+
+  var _uploadAbortEvent = function _uploadAbortEvent() {
+    _setStatus('abort');
+  };
+
+  var _addFileIdInput = function _addFileIdInput(id) {
+    id = id ^ 0;
+
+    _fileBlock.$newInput.val(id);
+
+    _fileBlock.$container.append(_fileBlock.$newInput);
+
+    _setStatus('success');
+  };
+
+  var _getFileIco = function _getFileIco(fileName) {
+    var len = fileName.length;
+    var symb3 = fileName.substr(len - 3, len).toLowerCase();
+    var symb4 = fileName.substr(len - 4, len).toLowerCase();
+    var ico = '';
+
+    if ($.inArray(symb3, ['doc', 'xls', 'rtf', 'txt']) != -1 || $.inArray(symb4, ['docx', 'xlsx']) != -1) {
+      ico = 'ico-file-doc';
+    } else if ($.inArray(symb3, ['zip', 'rar']) != -1) {
+      ico = 'ico-file-zip';
+    } else if ($.inArray(symb3, ['png', 'jpg', 'gif', 'psd']) != -1 || $.inArray(symb4, ['jpeg']) != -1) {
+      ico = 'ico-file-image';
+    } else if ($.inArray(symb3, ['mp3', 'wav', 'avi']) != -1) {
+      ico = 'ico-file-audio';
+    } else {
+      ico = 'ico-file-zip';
+    }
+
+    return ico;
+  };
+
+  var _checkMaxSize = function _checkMaxSize() {
+    return _file.size <= _maxSizeReal;
+  };
+
+  var _get = function _get() {
+    return _fileBlock.$container;
+  };
+
+  var _getFileName = function _getFileName() {
+    return _file.name;
+  };
+
+  var _hideBlock = function _hideBlock(isNew) {
+    _fileBlock.$container.animate({
+      opacity: 0,
+      height: 0,
+      margin: 0
+    }, 200, function () {
+      if (isNew) {
+        _fileBlock.$container.remove();
+
+        _fileBlock = null;
+      }
+
+      $(_options.selector).trigger('fileUploader.change');
+    });
+  };
+
+  var _setType = function _setType(type) {
+    switch (type) {
+      case 'deleted':
+        _fileBlock.$container.addClass('file-item_type_deleted');
+
+        break;
+
+      case 'error':
+        _fileBlock.$container.addClass('file-item_type_error');
+
+        break;
+    }
+  };
+
+  var _removeType = function _removeType(type) {
+    switch (type) {
+      case 'deleted':
+        _fileBlock.$container.removeClass('file-item_type_deleted');
+
+        break;
+
+      case 'error':
+        _fileBlock.$container.removeClass('file-item_type_error');
+
+        break;
+    }
+  };
+
+  var _isType = function _isType(type) {
+    switch (type) {
+      case 'deleted':
+        var isType = _fileBlock.$container.hasClass('file-item_type_deleted');
+
+        break;
+
+      case 'error':
+        var isType = _fileBlock.$container.hasClass('file-item_type_error');
+
+        break;
+    }
+
+    return isType;
+  };
+
+  var _showError = function _showError(reason) {
+    var text = _options.errors["default"];
+
+    if (_options.errors[reason]) {
+      text = _options.errors[reason];
+    }
+
+    _fileBlock.$error.html(text).removeClass('hidden');
+  };
+
+  var _hideError = function _hideError() {
+    _fileBlock.$error.html('').addClass('hidden');
+  };
+
+  var _checkError = function _checkError() {
+    return _fileBlock.$container.hasClass('file-item_type_error');
+  };
+
+  var _markDelete = function _markDelete() {
+    if (_file.id) {
+      _setType('deleted');
+
+      _fileBlock.$container.append(_fileBlock.$deleteInput);
+
+      _fileBlock.$deleteInput.val(_file.id);
+
+      _fileBlock.$container.data('onDelete', true);
+    }
+  };
+
+  var _unmarkDelete = function _unmarkDelete() {
+    _removeType('deleted');
+
+    _fileBlock.$deleteInput.detach();
+
+    _fileBlock.$container.data('onDelete', false);
+  };
+
+  var _setStatus = function _setStatus(status) {
+    _status = status;
+  };
+
+  var _getStatus = function _getStatus() {
+    return _status;
+  };
+
+  var _destroy = function _destroy() {
+    if (_fileBlock === null) {
+      return;
+    } else {
+      _fileBlock.$container.remove();
+
+      uploadFilesObject.__totalFiles('dec');
+    }
+  };
+  /**
+   * Вызов дейсвия после изменения файла (загрузки, удаления)
+   * @private
+   */
+
+
+  var _onChangeFile = function _onChangeFile() {
+    if (_options.onChange) {
+      _options.onChange();
+    }
+  };
+
+  __construct();
+
+  return {
+    upload: _uploadFile,
+    get: _get,
+    getFileName: _getFileName,
+    status: _getStatus,
+    destroy: _destroy,
+    hideError: _hideError,
+    checkError: _checkError,
+    onChangeFile: _onChangeFile
+  };
+}
+
+/***/ }),
+
+/***/ 22:
+/*!**********************************************************!*\
+  !*** multi ./public_html/js/components/file-uploader.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /Users/sc/Documents/GitHub/kwork.ru/public_html/js/components/file-uploader.js */"./public_html/js/components/file-uploader.js");
+
+
+/***/ })
+
+/******/ });
