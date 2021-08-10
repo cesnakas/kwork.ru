@@ -79,6 +79,9 @@
             box-sizing: border-box;
             border-radius: 50%;
             background-color: rgba(#E7E7E7,.2);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7' fill='none'%3E%3Cpath d='M6 7L11.5196 0.691923C11.7241 0.458165 11.4233 0.126186 11.1706 0.306724C8.07753 2.51605 3.92247 2.51605 0.829414 0.306725C0.576661 0.126186 0.275893 0.458163 0.480431 0.691921L6 7Z' fill='%23B8B8B8'/%3E%3C/svg%3E");
+            background-position: center;
+            background-repeat: no-repeat;
             box-shadow: 0 1px 4px rgba(#000,.2);
         }
     }
