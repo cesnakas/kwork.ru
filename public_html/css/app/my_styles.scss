@@ -1,6 +1,8 @@
 .order {
     display: flex;
+    justify-content: space-between;
     box-sizing: border-box;
+    width: 100%;
     min-height: 128px;
     padding: 16px 24px;
     border: 1px solid #E7E7E7;
@@ -9,6 +11,7 @@
     background: #FFF;
 
     &__avatar {
+        flex-grow: 0;
         width: 72px;
         height: 72px;
         overflow: hidden;
@@ -24,6 +27,7 @@
     }
 
     &__content {
+        flex-grow: 1;
         margin-left: 24px;
     }
 
@@ -34,13 +38,51 @@
     }
 
     &__status {
-        display: flex;
-        align-items: center;
-        margin-bottom: 8px;
-        font-weight: normal;
-        font-size: 11px;
-        line-height: 15px;
+        &-user {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-weight: normal;
+            font-size: 11px;
+            line-height: 15px;
+        }
     }
+
+    &__right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-grow: 0;
+        width: 101px;
+
+        &-status {
+            min-width: 81px;
+            height: 21px;
+            box-sizing: border-box;
+            margin-right: -24px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border-radius: 24px 0 0 24px;
+            font-weight: 600;
+            font-size: 10px;
+
+            &.gray {
+                color: #4F4F4F;
+                background-color: rgba(189,189,189,.23);
+            }
+        }
+
+        &-toggle {
+            width: 32px;
+            height: 32px;
+            box-sizing: border-box;
+            border-radius: 50%;
+            background-color: rgba(#E7E7E7,.2);
+            box-shadow: 0 1px 4px rgba(#000,.2);
+        }
+    }
+
 
     &__circle-online {
         display: inline-block;

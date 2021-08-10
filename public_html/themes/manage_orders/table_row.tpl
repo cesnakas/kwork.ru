@@ -2,18 +2,26 @@
 	<tr class="m-hidden m-clearfix">
 		<td class="ellipsis-wrap">
 			<div class="ellipsis ml10" data-id="{$order.OID}">
-				{include file="manage_orders/block_order_name.tpl"} 
+
+				{include file="manage_orders/block_order_name.tpl"}
+
 				{if $order.canEditName eq 1}
 					<i class="change-order-name-js fa fa-pencil tooltipster" data-tooltip-text="{'Изменить название заказа'|t}" rel="{$order.OID}"></i>
 				{/if}
+
 				{include file="components/orders_row_inbox_ico.tpl" order=$order}
+
 				{include file="components/orders_row_report_ico.tpl" order=$order}
+
 				{if $order.project}
 					<img style="height:1em;" class="pl10 v-align-m tooltipster" alt="" src="{"/orderfromrequest_icon.png"|cdnImageUrl}"
 						 data-tooltip-text='{'Заказ по запросу'|t} "{$order.project|truncate:80:"..."}"'>
 				{/if}
+
 				{include file="components/orders_row_promo_ico.tpl" order=$order}
+
 				{include file="components/orders_row_stages_done_text.tpl" order=$order}
+
 			</div>
 		</td>
 		<td class="pr">

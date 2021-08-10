@@ -18,8 +18,12 @@
 				</div>
 				<div class="order__content">
 					<h5 class="order__title">Баннер для сайта</h5>
-					<div class="order__status">Покупатель онлайн <i class="order__circle-online"></i></div>
+					<div class="order__status-user">{'Покупатель онлайн'|t} <i class="order__circle-online"></i></div>
 					<button class="order__btn">Отправить сообщение</button>
+				</div>
+				<div class="order__right">
+					<div class="order__right-status gray">Не начат</div>
+					<div class="order__right-toggle"></div>
 				</div>
 			</div>
 
