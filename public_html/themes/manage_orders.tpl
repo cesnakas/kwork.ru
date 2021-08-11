@@ -29,12 +29,52 @@
 				</div>
 
 				<div class="order__body hidden">
-					<div class="order__body-left">
 
+					<div class="order__body-item">
+						<div class="order__body-left">
+							<div class="order__body-left-title">Заказ <br>создан</div>
+						</div>
+						<div class="order__body-right">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam enim ipsa laudantium modi nobis quibusdam saepe soluta unde vitae voluptate! Aliquid doloremque nesciunt quidem? Deleniti odit praesentium quisquam ratione voluptatum?
+						</div>
 					</div>
-					<div class="order__body-right">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam enim ipsa laudantium modi nobis quibusdam saepe soluta unde vitae voluptate! Aliquid doloremque nesciunt quidem? Deleniti odit praesentium quisquam ratione voluptatum?
+
+					<div class="order__body-item">
+						<div class="order__body-left">
+							<div class="order__body-left-title">Взят <br>в работу</div>
+						</div>
+						<div class="order__body-right">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, error iusto maxime nam pariatur soluta. Ab aliquid earum enim, facilis hic minus modi odit, perspiciatis repellat sequi sunt suscipit voluptates.
+						</div>
 					</div>
+
+					<div class="order__body-item">
+						<div class="order__body-left">
+							<div class="order__body-left-title">Сдан <br>на проверку</div>
+						</div>
+						<div class="order__body-right">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab delectus deserunt eaque explicabo fuga fugit illum magni maiores maxime, molestiae non placeat possimus veniam! Accusantium facere fuga hic placeat quam!
+						</div>
+					</div>
+
+					<div class="order__body-item">
+						<div class="order__body-left">
+							<div class="order__body-left-title">Принят</div>
+						</div>
+						<div class="order__body-right">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad architecto dolorem eius eos explicabo laudantium libero magnam maiores nisi obcaecati odit quaerat quasi quod, repudiandae ut vel velit vitae voluptas.
+						</div>
+					</div>
+
+					<div class="order__body-item">
+						<div class="order__body-left">
+							<div class="order__body-left-title">Опубликован <br>в портфолио</div>
+						</div>
+						<div class="order__body-right">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam exercitationem fuga labore quisquam reprehenderit! Cumque ducimus, neque? Accusamus consequatur illum reprehenderit sed, vel voluptatum? Consequatur natus nesciunt obcaecati qui recusandae?
+						</div>
+					</div>
+
 				</div>
 
 				<button class="order__right-toggle"></button>
