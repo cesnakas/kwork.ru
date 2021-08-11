@@ -25,15 +25,19 @@
 					</div>
 					<div class="order__right">
 						<div class="order__right-status gray -green -yellow -red -blue">{'Не начат'|t}</div>
-						<!--<a class="order__right-toggle toggler" data-toggle="collapse" href="#collapseExample"></a>-->
 					</div>
 				</div>
 
-				<div class="order__body">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam enim ipsa laudantium modi nobis quibusdam saepe soluta unde vitae voluptate! Aliquid doloremque nesciunt quidem? Deleniti odit praesentium quisquam ratione voluptatum?
+				<div class="order__body hidden">
+					<div class="order__body-left">
+
+					</div>
+					<div class="order__body-right">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam enim ipsa laudantium modi nobis quibusdam saepe soluta unde vitae voluptate! Aliquid doloremque nesciunt quidem? Deleniti odit praesentium quisquam ratione voluptatum?
+					</div>
 				</div>
 
-				<a class="order__right-toggle toggler" data-toggle="collapse" href="#"></a>
+				<button class="order__right-toggle"></button>
 
 			</div>
 

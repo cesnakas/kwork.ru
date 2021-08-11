@@ -329,6 +329,9 @@
   border-radius: 8px;
   color: #000;
   background: #FFF;
+  -webkit-transition: all 0.35s linear;
+  -o-transition: all 0.35s linear;
+  transition: all 0.35s linear;
 }
 
 .order__header {
@@ -456,8 +459,10 @@
   bottom: 24px;
   width: 32px;
   height: 32px;
+  outline: none;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  border: none;
   border-radius: 50%;
   background-color: rgba(231, 231, 231, 0.2);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7' fill='none'%3E%3Cpath d='M6 7L11.5196 0.691923C11.7241 0.458165 11.4233 0.126186 11.1706 0.306724C8.07753 2.51605 3.92247 2.51605 0.829414 0.306725C0.576661 0.126186 0.275893 0.458163 0.480431 0.691921L6 7Z' fill='%23B8B8B8'/%3E%3C/svg%3E");
@@ -465,6 +470,12 @@
   background-repeat: no-repeat;
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
           box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.35s ease-in-out;
+  -o-transition: all 0.35s ease-in-out;
+  transition: all 0.35s ease-in-out;
+  -webkit-transform: rotate(0);
+      -ms-transform: rotate(0);
+          transform: rotate(0);
 }
 
 .order__circle-online {
@@ -489,6 +500,40 @@
 }
 
 .order__body {
-  margin-top: 24px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  padding-top: 24px;
+  padding-bottom: 68px;
+  -webkit-transition: all 0.35s linear, dislpay 60s;
+  -o-transition: all 0.35s linear, dislpay 60s;
+  transition: all 0.35s linear, dislpay 60s;
+}
+
+.order__body.hidden {
+  height: 0;
+}
+
+.order__body-left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border-left: 1px solid;
+  height: 50px;
+  width: 50px;
+  margin-left: -22px;
+}
+
+.order__body:not(.hidden) ~ .order__right-toggle {
+  -webkit-box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.2);
+  -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 

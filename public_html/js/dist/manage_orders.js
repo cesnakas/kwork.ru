@@ -32354,6 +32354,10 @@ __webpack_require__(/*! appJs/bootstrap.js */ "./public_html/js/app/bootstrap.js
 
 __webpack_require__(/*! appJs/live-tabs.js */ "./public_html/js/app/live-tabs.js");
 
+document.querySelector('.order__right-toggle').onclick = function () {
+  document.querySelector('.order__body').classList.toggle('hidden'); // document.querySelector('.order__right-toggle').classList.toggle('upend');
+};
+
 /***/ }),
 
 /***/ 14:
