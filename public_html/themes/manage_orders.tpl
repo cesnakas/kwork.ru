@@ -12,20 +12,31 @@
 		<div class="centerwrap clearfix pt20 block-response">
 			<h1 class="f32 orders-title">{'Заказы'|t}</h1>
 
-			<div class="order">
-				<div class="order__avatar">
-					<img class="order__img" src="{'/2.png'|cdnMembersProfilePicUrl}" alt="...">
+			<div class="order__container">
+
+				<div class="order__header">
+					<div class="order__avatar">
+						<img class="order__img" src="{'/2.png'|cdnMembersProfilePicUrl}" alt="...">
+					</div>
+					<div class="order__content">
+						<h5 class="order__title">Баннер для сайта</h5>
+						<div class="order__status-user">{'Покупатель онлайн'|t} <i class="order__circle-online"></i></div>
+						<button class="order__btn">Отправить сообщение</button>
+					</div>
+					<div class="order__right">
+						<div class="order__right-status gray -green -yellow -red -blue">{'Не начат'|t}</div>
+						<!--<a class="order__right-toggle toggler" data-toggle="collapse" href="#collapseExample"></a>-->
+					</div>
 				</div>
-				<div class="order__content">
-					<h5 class="order__title">Баннер для сайта</h5>
-					<div class="order__status-user">{'Покупатель онлайн'|t} <i class="order__circle-online"></i></div>
-					<button class="order__btn">Отправить сообщение</button>
+
+				<div class="order__body">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam enim ipsa laudantium modi nobis quibusdam saepe soluta unde vitae voluptate! Aliquid doloremque nesciunt quidem? Deleniti odit praesentium quisquam ratione voluptatum?
 				</div>
-				<div class="order__right">
-					<div class="order__right-status gray">Не начат</div>
-					<div class="order__right-toggle"></div>
-				</div>
+
+				<a class="order__right-toggle toggler" data-toggle="collapse" href="#"></a>
+
 			</div>
+
 
 			{if $orders|@count eq "0" && $searchQuery eq null}
 				<div class="mt25 font-OpenSans t-align-c">
