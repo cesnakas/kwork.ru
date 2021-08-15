@@ -476,6 +476,7 @@
   -webkit-transform: rotate(0);
       -ms-transform: rotate(0);
           transform: rotate(0);
+  cursor: pointer;
 }
 
 .order__circle-online {
